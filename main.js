@@ -34,6 +34,7 @@ async function fetchLog()
     catch (e)
     {
         console.log(e);
+        alert(e);
     }
 }
 
