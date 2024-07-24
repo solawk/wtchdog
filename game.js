@@ -36,6 +36,9 @@ function commitDie(p)
 {
     players.get(p[0]).dead = true;
     players.get(p[0]).fires = 0;
+    
+    players.get(p[0]).tr.childNodes[0].innerHTML = "DIED";
+    setTimeout(() => { players.get(p[0]).tr.childNodes[0].innerHTML = ""; }, 5000);
 }
 
 function kill(a, b)
