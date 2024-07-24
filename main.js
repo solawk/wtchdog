@@ -16,7 +16,7 @@ async function fetchLog()
     try
     {
         const ip = document.getElementById("ip").value;
-        const data = await(fetch(/*"http://" + */ip + ":8111/hudmsg?lastEvt=-1&lastDmg=" + lastId.toString()));
+        const data = await(fetch("http://" + ip + ":8111/hudmsg?lastEvt=-1&lastDmg=" + lastId.toString()));
         const reader = await(data.body.getReader().read());
         const str = new TextDecoder().decode(reader.value);
 
