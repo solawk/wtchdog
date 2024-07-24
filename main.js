@@ -1,22 +1,40 @@
 let lastId = -1;
 let lastTime = 0;
 
+let isFetching = false;
+
+setInterval(() =>
+{
+    if (isFetching)
+    {
+        fetchLog();
+    }
+}, 500);
+
 async function fetchLog()
 {
-    const data = await(fetch("http://localhost:8111/hudmsg?lastEvt=-1&lastDmg=" + lastId.toString()));
-    const reader = await(data.body.getReader().read());
-    const str = new TextDecoder().decode(reader.value);
-
-    const json = JSON.parse(str);
-    if (json.damage.length === 0) return;
-
-    for (const d of json.damage)
+    try
     {
-        //console.log(d);
-        processDamage(d.msg, d.time);
-    }
+        const ip = document.getElementById("ip").value;
+        const data = await(fetch("http://" + ip + ":8111/hudmsg?lastEvt=-1&lastDmg=" + lastId.toString()));
+        const reader = await(data.body.getReader().read());
+        const str = new TextDecoder().decode(reader.value);
 
-    lastId = json.damage[json.damage.length - 1].id;
+        const json = JSON.parse(str);
+        if (json.damage.length === 0) return;
+
+        for (const d of json.damage)
+        {
+            //console.log(d);
+            processDamage(d.msg, d.time);
+        }
+
+        lastId = json.damage[json.damage.length - 1].id;
+    }
+    catch (e)
+    {
+        console.log(e);
+    }
 }
 
 function processDamage(dmg, time)
@@ -27,6 +45,7 @@ function processDamage(dmg, time)
         // Trigger a reset
         console.log("RESET");
         players.clear();
+        clearTable();
     }
     lastTime = time;
 

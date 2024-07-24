@@ -16,3 +16,13 @@ function createPlayerEntry(p)
 
     return tr;
 }
+
+function clearTable()
+{
+    const table = document.getElementById("playerTable");
+
+    for (const tr of table.childNodes)
+    {
+        table.removeChild(tr);
+    }
+}
