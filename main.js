@@ -33,8 +33,8 @@ async function fetchLog()
     }
     catch (e)
     {
-        console.log(e);
-        alert(e);
+        console.log(e.message);
+        alert(e.message);
     }
 }
 
